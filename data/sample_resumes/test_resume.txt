@@ -1,0 +1,32 @@
+# First, make sure the directory exists
+mkdir -p data/sample_resumes
+
+# Create the test resume file
+nano data/sample_resumes/test_resume.txt
+```
+
+Paste this sample resume:
+```
+John Doe
+john.doe@email.com | +91-9876543210
+https://linkedin.com/in/johndoe | https://github.com/johndoe
+
+EDUCATION
+B.Tech in Computer Science Engineering
+XYZ University, 2019-2023
+
+SKILLS
+Python, Java, Machine Learning, React, Node.js, MongoDB, Git
+Communication, Leadership, Problem Solving
+
+EXPERIENCE
+Software Developer Intern at ABC Tech
+June 2022 - August 2022
+- Developed web applications using React and Node.js
+- Worked on machine learning models for prediction
+- Improved system performance by 30%
+
+PROJECTS
+E-commerce Website
+- Built using React, Node.js, and MongoDB
+- Implemented user authentication and payment gateway
