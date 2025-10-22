@@ -9,6 +9,7 @@ An intelligent resume analysis system built with Python, Machine Learning, and N
 ## 🌟 Features
 
 ### Core Features
+
 - 📄 **Multi-Format Support**: Analyze resumes in PDF, DOCX, and TXT formats
 - 🤖 **AI-Powered Parsing**: Extract contact info, skills, education, and experience using NLP
 - 🎯 **ATS Score Calculator**: Get compatibility score with industry-standard ATS systems
@@ -17,6 +18,7 @@ An intelligent resume analysis system built with Python, Machine Learning, and N
 - 💡 **Smart Suggestions**: Receive actionable feedback to improve your resume
 
 ### Advanced Features
+
 - 🎓 **ML Job Role Prediction**: Predict suitable job roles using Naive Bayes classifier
 - �� **Progress Tracking**: Track resume improvements over time with analytics dashboard
 - 🔄 **Resume Comparison**: Compare and rank multiple resumes side-by-side
@@ -26,62 +28,73 @@ An intelligent resume analysis system built with Python, Machine Learning, and N
 ## 🛠️ Technology Stack
 
 **Backend:**
+
 - Python 3.8+
 - spaCy (NLP & Named Entity Recognition)
 - scikit-learn (Machine Learning)
 - NLTK (Text Processing)
 
 **Libraries:**
+
 - pdfplumber (PDF parsing)
 - python-docx (DOCX parsing)
 - pandas (Data manipulation)
 - plotly (Data visualization)
 
 **Frontend:**
+
 - Streamlit (Web interface)
 
 ## 📦 Installation
 
 ### Prerequisites
+
 - Python 3.8 or higher
 - pip package manager
 
 ### Setup Instructions
 
 1. **Clone the repository**
+
 ```bash
 git clone <your-repo-url>
-cd resume-analyzer
+cd ai-resume-analyzer
 ```
 
 2. **Create virtual environment**
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. **Install dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 4. **Download NLP models**
+
 ```bash
 python -m spacy download en_core_web_sm
 python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
 ```
 
 5. **Run the application**
+
 ```bash
 streamlit run app.py
 ```
 
 6. **Access the app**
+
 - Open your browser and navigate to `http://localhost:8501`
 
 ## 🚀 Usage
 
 ### Single Resume Analysis
+
 1. Navigate to the main page
 2. Upload your resume (PDF/DOCX/TXT)
 3. Optionally paste a job description
@@ -89,12 +102,14 @@ streamlit run app.py
 5. Download detailed analysis report
 
 ### Compare Multiple Resumes
+
 1. Go to "Compare Resumes" page
 2. Upload 2+ resumes
 3. Click "Compare Resumes"
 4. View rankings and visualizations
 
 ### Track Progress
+
 1. Go to "Analytics Dashboard"
 2. Upload resume versions over time
 3. Track your improvements with charts
@@ -103,17 +118,21 @@ streamlit run app.py
 ## 📊 How It Works
 
 ### 1. Text Extraction
+
 - Extracts text from PDF, DOCX, and TXT files
 - Cleans and preprocesses text data
 
 ### 2. Information Parsing
+
 - Uses spaCy NER for name extraction
 - Regex patterns for contact info, URLs
 - Section detection for education and experience
 - Keyword matching for skills extraction
 
 ### 3. ATS Scoring
+
 Multi-factor scoring algorithm:
+
 - Contact information completeness (20%)
 - Section structure (20%)
 - Formatting quality (15%)
@@ -122,18 +141,21 @@ Multi-factor scoring algorithm:
 - Job description matching (20%)
 
 ### 4. Job Matching
+
 - TF-IDF vectorization of resume and job description
 - Cosine similarity calculation
 - Missing keyword identification
 
 ### 5. ML Prediction
+
 - Naive Bayes classifier trained on job role patterns
 - Predicts top 3 suitable roles with confidence scores
 - Categories: Software Developer, Data Scientist, Web Developer, DevOps, etc.
 
 ## 📁 Project Structure
+
 ```
-resume-analyzer/
+ai-resume-analyzer/
 ├── app.py                      # Main application
 ├── pages/                      # Multi-page Streamlit app
 │   ├── 1_Compare_Resumes.py
@@ -160,12 +182,15 @@ resume-analyzer/
 ## 🔧 Configuration
 
 ### Adding New Skills
+
 Edit `utils/resume_parser.py` and add to `technical_skills` or `soft_skills` lists.
 
 ### Customizing ATS Scoring
+
 Modify weights in `utils/ats_scorer.py` `calculate_ats_score()` method.
 
 ### Training with Custom Data
+
 Update job roles in `utils/job_predictor.py` and retrain the model.
 
 ## 📈 Performance
@@ -211,6 +236,7 @@ This is a college project, but suggestions are welcome!
 ## 👨‍💻 Author
 
 **Your Name**
+
 - GitHub: [@yourusername](https://github.com/yourusername)
 - LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
 - Email: your.email@example.com
@@ -228,6 +254,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For issues and questions:
+
 - Open an issue on GitHub
 - Email: your.email@example.com
 
@@ -235,4 +262,4 @@ For issues and questions:
 
 **Made with ❤️ for College Project Expo 2025**
 
-*If this project helped you, please ⭐ star the repository!*
+_If this project helped you, please ⭐ star the repository!_
