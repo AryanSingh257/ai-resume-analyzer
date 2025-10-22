@@ -173,42 +173,122 @@ class ResumeParser:
         return urls
     
     def extract_skills(self, text):
-        """Extract technical and soft skills"""
+        """Extract technical and soft skills with word boundary checking"""
         
-        technical_skills = [
-            # Programming Languages
-            'python', 'java', 'javascript', 'c++', 'c#', 'c', 'ruby', 'php', 
-            'swift', 'kotlin', 'go', 'rust', 'typescript', 'r', 'matlab', 'scala',
+        import re
+        
+        technical_skills = {
+            # Programming Languages (exact matches needed)
+            'python': ['python'],
+            'java': ['java', 'javase', 'javaee'],
+            'javascript': ['javascript', 'js'],
+            'c++': ['c++', 'cpp'],
+            'c#': ['c#', 'csharp'],
+            'c': ['\\bc\\b'],  # Word boundary for single letter
+            'ruby': ['ruby'],
+            'php': ['php'],
+            'swift': ['swift'],
+            'kotlin': ['kotlin'],
+            'go': ['\\bgolang\\b', '\\bgo\\b'],  # Specific patterns
+            'rust': ['rust'],
+            'typescript': ['typescript', 'ts'],
+            'r': ['\\br\\b'],  # Word boundary
+            'matlab': ['matlab'],
+            'scala': ['scala'],
             
             # Web Technologies
-            'html', 'css', 'react', 'angular', 'vue', 'node.js', 'nodejs', 'express',
-            'django', 'flask', 'spring', 'asp.net', 'jquery', 'bootstrap', 'tailwind',
+            'html': ['html', 'html5'],
+            'css': ['css', 'css3'],
+            'react': ['react', 'reactjs', 'react.js'],
+            'angular': ['angular', 'angularjs'],
+            'vue': ['vue', 'vuejs', 'vue.js'],
+            'node.js': ['node.js', 'nodejs', 'node'],
+            'express': ['express', 'expressjs', 'express.js'],
+            'django': ['django'],
+            'flask': ['flask'],
+            'spring': ['spring', 'spring boot', 'springboot'],
+            'asp.net': ['asp.net', 'aspnet'],
+            'jquery': ['jquery'],
+            'bootstrap': ['bootstrap'],
+            'tailwind': ['tailwind', 'tailwindcss'],
             
             # Databases
-            'sql', 'mysql', 'postgresql', 'mongodb', 'oracle', 'redis',
-            'cassandra', 'dynamodb', 'sqlite', 'firebase', 'nosql',
+            'sql': ['sql'],
+            'mysql': ['mysql'],
+            'postgresql': ['postgresql', 'postgres'],
+            'mongodb': ['mongodb', 'mongo'],
+            'oracle': ['oracle db', 'oracle'],
+            'redis': ['redis'],
+            'cassandra': ['cassandra'],
+            'dynamodb': ['dynamodb'],
+            'sqlite': ['sqlite'],
+            'firebase': ['firebase'],
+            'nosql': ['nosql'],
             
             # ML/AI
-            'machine learning', 'deep learning', 'tensorflow', 'pytorch',
-            'keras', 'scikit-learn', 'pandas', 'numpy', 'opencv', 'nlp',
-            'computer vision', 'neural networks', 'ai', 'artificial intelligence',
+            'machine learning': ['machine learning', 'ml'],
+            'deep learning': ['deep learning', 'dl'],
+            'tensorflow': ['tensorflow'],
+            'pytorch': ['pytorch'],
+            'keras': ['keras'],
+            'scikit-learn': ['scikit-learn', 'sklearn', 'scikit learn'],
+            'pandas': ['pandas'],
+            'numpy': ['numpy'],
+            'opencv': ['opencv'],
+            'nlp': ['nlp', 'natural language processing'],
+            'computer vision': ['computer vision', 'cv'],
+            'neural networks': ['neural networks', 'neural network', 'nn'],
+            'ai': ['artificial intelligence', '\\bai\\b'],
             
             # Cloud & DevOps
-            'aws', 'azure', 'gcp', 'google cloud', 'docker', 'kubernetes', 'jenkins',
-            'git', 'github', 'gitlab', 'ci/cd', 'terraform', 'ansible',
+            'aws': ['aws', 'amazon web services'],
+            'azure': ['azure', 'microsoft azure'],
+            'gcp': ['gcp', 'google cloud'],
+            'google cloud': ['google cloud platform', 'google cloud'],
+            'docker': ['docker'],
+            'kubernetes': ['kubernetes', 'k8s'],
+            'jenkins': ['jenkins'],
+            'git': ['\\bgit\\b'],  # Word boundary to avoid "digit"
+            'github': ['github'],
+            'gitlab': ['gitlab'],
+            'ci/cd': ['ci/cd', 'ci cd', 'cicd'],
+            'terraform': ['terraform'],
+            'ansible': ['ansible'],
             
             # Other
-            'rest api', 'graphql', 'microservices', 'agile', 'scrum',
-            'linux', 'unix', 'bash', 'power bi', 'tableau', 'excel',
-            'data structures', 'algorithms', 'oop', 'testing'
-        ]
+            'rest api': ['rest api', 'restful', 'rest'],
+            'graphql': ['graphql'],
+            'microservices': ['microservices', 'micro services'],
+            'agile': ['agile'],
+            'scrum': ['scrum'],
+            'linux': ['linux'],
+            'unix': ['unix'],
+            'bash': ['bash'],
+            'power bi': ['power bi', 'powerbi'],
+            'tableau': ['tableau'],
+            'excel': ['excel', 'ms excel'],
+            'data structures': ['data structures', 'dsa'],
+            'algorithms': ['algorithms', 'algo'],
+            'oop': ['oop', 'object oriented'],
+            'testing': ['testing', 'unit testing']
+        }
         
-        soft_skills = [
-            'leadership', 'communication', 'teamwork', 'problem solving',
-            'critical thinking', 'time management', 'adaptability',
-            'collaboration', 'creativity', 'analytical', 'presentation',
-            'negotiation', 'conflict resolution', 'decision making'
-        ]
+        soft_skills = {
+            'leadership': ['leadership', 'leader', 'leading'],
+            'communication': ['communication', 'communicate'],
+            'teamwork': ['teamwork', 'team work', 'team player'],
+            'problem solving': ['problem solving', 'problem-solving'],
+            'critical thinking': ['critical thinking'],
+            'time management': ['time management'],
+            'adaptability': ['adaptability', 'adaptable'],
+            'collaboration': ['collaboration', 'collaborate'],
+            'creativity': ['creativity', 'creative'],
+            'analytical': ['analytical', 'analysis'],
+            'presentation': ['presentation'],
+            'negotiation': ['negotiation'],
+            'conflict resolution': ['conflict resolution'],
+            'decision making': ['decision making', 'decision-making']
+        }
         
         found_technical = set()
         found_soft = set()
@@ -216,14 +296,28 @@ class ResumeParser:
         text_lower = text.lower()
         
         # Find technical skills
-        for skill in technical_skills:
-            if skill in text_lower:
-                found_technical.add(skill.title())
+        for skill_name, patterns in technical_skills.items():
+            for pattern in patterns:
+                # Use regex with word boundaries for better matching
+                if '\\b' in pattern:
+                    # Already has word boundaries
+                    if re.search(pattern, text_lower):
+                        found_technical.add(skill_name.title())
+                        break
+                else:
+                    # Add word boundaries
+                    regex_pattern = r'\b' + re.escape(pattern) + r'\b'
+                    if re.search(regex_pattern, text_lower):
+                        found_technical.add(skill_name.title())
+                        break
         
         # Find soft skills
-        for skill in soft_skills:
-            if skill in text_lower:
-                found_soft.add(skill.title())
+        for skill_name, patterns in soft_skills.items():
+            for pattern in patterns:
+                regex_pattern = r'\b' + re.escape(pattern) + r'\b'
+                if re.search(regex_pattern, text_lower, re.IGNORECASE):
+                    found_soft.add(skill_name.title())
+                    break
         
         return {
             'technical': sorted(list(found_technical)),
