@@ -62,6 +62,10 @@ with st.sidebar:
     Well... it is. 🤖  
     But hey, at least this one gives feedback instead of rejection emails! 📬
     """)
+    st.markdown("---")
+    st.header("🎤 Quick Actions")
+    if st.button("Generate Interview Pitches"):
+        st.switch_page("pages/9_🎤_Interview_Pitch.py")
     st.header("🎯 Quick Stats")
 
     if uploaded_file:
