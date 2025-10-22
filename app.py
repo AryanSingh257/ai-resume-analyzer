@@ -8,6 +8,10 @@ import json
 import os
 import subprocess
 
+# Run NLTK setup
+import nltk_setup
+nltk_setup.download_nltk_data()
+
 # Auto-download spaCy model if missing
 try:
     import spacy
