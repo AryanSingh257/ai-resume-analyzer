@@ -16,15 +16,6 @@ except OSError:
     subprocess.run(['python', '-m', 'spacy', 'download', 'en_core_web_sm'])
     nlp = spacy.load('en_core_web_sm')
 
-# Auto-download NLTK data if missing
-import nltk
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
-    nltk.download('stopwords')
-    nltk.download('wordnet')
-
 # Set page config must be first
 st.set_page_config(
     page_title="AI Resume Analyzer",
